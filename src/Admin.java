@@ -6,7 +6,7 @@ public class Admin extends Person {
 
     @Override
     public void displayInfo() {
-        System.out.println("Admin: " + name);
+        System.out.println("Admin: " + name + ", ID: " + id);
     }
 
     public void manageBooking(Booking booking) {

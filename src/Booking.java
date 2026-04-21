@@ -10,16 +10,21 @@ public class Booking {
     }
 
     public void confirmBooking() {
-        boolean added = studyRoom.addStudent(student);
 
-        if (added) {
-            System.out.println(student.name + " successfully booked room "
-                    + studyRoom.getRoomCode() + " at " + timeSlot);
+        try {
+            studyRoom.addStudent(student);
 
-            System.out.println("Current students: "
-                    + studyRoom.getCurrentStudents() + "/" + studyRoom.getCapacity());
-        } else {
-            System.out.println("Booking failed: Room is full!");
+            System.out.println("Booking successful for " + student.name);
+            System.out.println("Room: " + studyRoom.getRoomCode());
+            System.out.println("Time: " + timeSlot);
+            System.out.println("Students: " +
+                    studyRoom.getCurrentStudents() + "/" + studyRoom.getCapacity());
+
+        } catch (RoomFullException e) {
+            System.out.println("Error: " + e.getMessage());
+
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid input: " + e.getMessage());
         }
     }
 }
