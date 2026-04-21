@@ -1,27 +1,34 @@
-public class StudyRoom {
-    private String roomCode;
-    private int capacity;
-    private boolean isAvailable;
+import java.util.ArrayList;
 
-    public StudyRoom(String roomCode, int capacity) {
-        this.roomCode = roomCode;
-        this.capacity = capacity;
-        this.isAvailable = true;
-    }
+    public class StudyRoom {
+        private String roomCode;
+        private int capacity;
+        private ArrayList<Student> students;
 
-    public String getRoomCode() {
-        return roomCode;
-    }
+        public StudyRoom(String roomCode, int capacity) {
+            this.roomCode = roomCode;
+            this.capacity = capacity;
+            this.students = new ArrayList<>();
+        }
 
-    public boolean isAvailable() {
-        return isAvailable;
-    }
+        public String getRoomCode() {
+            return roomCode;
+        }
 
-    public void reserveRoom() {
-        if (isAvailable) {
-            isAvailable = false;
-        } else {
-            System.out.println("Room already reserved!");
+        public int getCapacity() {
+            return capacity;
+        }
+
+        public int getCurrentStudents() {
+            return students.size();
+        }
+
+        public boolean addStudent(Student student) {
+            if (students.size() < capacity) {
+                students.add(student);
+                return true;
+            } else {
+                return false;
+            }
         }
     }
-}

@@ -1,6 +1,6 @@
 public class Booking {
-    private Student student;
     private StudyRoom studyRoom;
+    private Student student;
     private String timeSlot;
 
     public Booking(Student student, StudyRoom studyRoom, String timeSlot) {
@@ -10,13 +10,16 @@ public class Booking {
     }
 
     public void confirmBooking() {
-        if (studyRoom.isAvailable()) {
-            studyRoom.reserveRoom();
-            System.out.println("Booking confirmed for " + student.name +
-                    " in room " + studyRoom.getRoomCode() +
-                    " at " + timeSlot);
+        boolean added = studyRoom.addStudent(student);
+
+        if (added) {
+            System.out.println(student.name + " successfully booked room "
+                    + studyRoom.getRoomCode() + " at " + timeSlot);
+
+            System.out.println("Current students: "
+                    + studyRoom.getCurrentStudents() + "/" + studyRoom.getCapacity());
         } else {
-            System.out.println("Booking failed: Room not available.");
+            System.out.println("Booking failed: Room is full!");
         }
     }
 }
