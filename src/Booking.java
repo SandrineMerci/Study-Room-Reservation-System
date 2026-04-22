@@ -14,13 +14,15 @@ public class Booking {
 
         try {
             studyRoom.addStudent(student);
-            studyRoom.addBooking(this);
+
+            studyRoom.addBooking(this);              // list
+            studyRoom.addBooking(timeSlot, this);    // map
 
             System.out.println("\n BOOKING CONFIRMED");
             System.out.println("Student: " + student.name);
             System.out.println("Room: " + studyRoom.getRoomCode());
             System.out.println("Time: " + timeSlot);
-            System.out.println("Current occupancy: " +
+            System.out.println("Capacity: " +
                     studyRoom.getCurrentStudents() + "/" + studyRoom.getCapacity());
 
         } catch (RoomFullException e) {

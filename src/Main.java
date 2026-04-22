@@ -17,20 +17,18 @@ public class Main {
         while (true) {
 
             System.out.println("\n===== STUDY ROOM RESERVATION SYSTEM =====");
-
             System.out.println("1. View Rooms & Book");
             System.out.println("2. Exit");
 
             System.out.print("Choose option: ");
             int option = sc.nextInt();
-            sc.nextLine(); // clear buffer
+            sc.nextLine();
 
             if (option == 2) {
                 System.out.println("Goodbye!");
                 break;
             }
 
-            // SHOW ROOMS
             System.out.println("\n===== AVAILABLE ROOMS =====");
 
             for (StudyRoom room : rooms) {
@@ -39,7 +37,6 @@ public class Main {
                         " | Current: " + room.getCurrentStudents());
             }
 
-            // STUDENT INFO
             System.out.print("\nEnter Name: ");
             String name = sc.nextLine();
 
@@ -48,7 +45,6 @@ public class Main {
 
             Student student = new Student(name, id);
 
-            // ROOM SELECTION
             System.out.print("Enter Room Code: ");
             String roomCode = sc.nextLine();
 
@@ -66,7 +62,6 @@ public class Main {
                 continue;
             }
 
-            // TIME SLOT SELECTION (NEW LOGIC)
             System.out.println("\n===== TIME SLOTS =====");
 
             List<String> slots = selectedRoom.getTimeSlots();
@@ -93,8 +88,12 @@ public class Main {
 
             String selectedTime = slots.get(choice - 1);
 
-            // CREATE BOOKING
-            Booking booking = new Booking(student, selectedRoom, selectedTime);
+            if (selectedRoom.getBookingByTime(selectedTime).size() >= selectedRoom.getCapacity()) {
+                System.out.println(" This time slot is full!");
+                continue;
+            }
+
+            Booking booking = student.requestBooking(selectedRoom, selectedTime);
 
             admin.manageBooking(booking);
         }

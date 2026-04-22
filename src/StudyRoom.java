@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class StudyRoom {
 
@@ -9,7 +11,8 @@ public class StudyRoom {
     private List<Student> students;
     private List<Booking> bookings;
 
-    // time slots for each room
+    private Map<String, List<Booking>> bookingMap;
+
     private List<String> timeSlots;
 
     public StudyRoom(String roomCode, int capacity) {
@@ -18,6 +21,7 @@ public class StudyRoom {
 
         this.students = new ArrayList<>();
         this.bookings = new ArrayList<>();
+        this.bookingMap = new HashMap<>();
 
         this.timeSlots = new ArrayList<>();
         timeSlots.add("08AM - 10AM");
@@ -53,5 +57,24 @@ public class StudyRoom {
 
     public void addBooking(Booking booking) {
         bookings.add(booking);
+    }
+
+    public void addBooking(String timeSlot, Booking booking) {
+
+        bookingMap.putIfAbsent(timeSlot, new ArrayList<>());
+
+        List<Booking> list = bookingMap.get(timeSlot);
+
+        if (list.size() >= capacity) {
+            throw new RoomFullException(
+                    "Time slot " + timeSlot + " is full in room " + roomCode
+            );
+        }
+
+        list.add(booking);
+    }
+
+    public List<Booking> getBookingByTime(String timeSlot) {
+        return bookingMap.getOrDefault(timeSlot, new ArrayList<>());
     }
 }
