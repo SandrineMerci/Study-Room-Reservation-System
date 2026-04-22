@@ -1,6 +1,7 @@
 public class Booking {
-    private StudyRoom studyRoom;
+
     private Student student;
+    private StudyRoom studyRoom;
     private String timeSlot;
 
     public Booking(Student student, StudyRoom studyRoom, String timeSlot) {
@@ -13,18 +14,18 @@ public class Booking {
 
         try {
             studyRoom.addStudent(student);
+            studyRoom.addBooking(this);
 
-            System.out.println("Booking successful for " + student.name);
+            System.out.println("\n BOOKING CONFIRMED");
+            System.out.println("Student: " + student.name);
             System.out.println("Room: " + studyRoom.getRoomCode());
             System.out.println("Time: " + timeSlot);
-            System.out.println("Students: " +
+            System.out.println("Current occupancy: " +
                     studyRoom.getCurrentStudents() + "/" + studyRoom.getCapacity());
 
         } catch (RoomFullException e) {
-            System.out.println("Error: " + e.getMessage());
-
-        } catch (IllegalArgumentException e) {
-            System.out.println("Invalid input: " + e.getMessage());
+            System.out.println("\n BOOKING FAILED");
+            System.out.println(e.getMessage());
         }
     }
 }
