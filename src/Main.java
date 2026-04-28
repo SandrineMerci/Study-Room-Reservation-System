@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-
+        FileManager.readBookings();
         Scanner sc = new Scanner(System.in);
 
         Admin admin = new Admin("Manager", "A001");

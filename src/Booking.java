@@ -9,21 +9,31 @@ public class Booking {
         this.studyRoom = studyRoom;
         this.timeSlot = timeSlot;
     }
+    public Student getStudent() {
+        return student;
+    }
+
+    public StudyRoom getStudyRoom() {
+        return studyRoom;
+    }
+
+    public String getTimeSlot() {
+        return timeSlot;
+    }
 
     public void confirmBooking() {
 
         try {
             studyRoom.addStudent(student);
+            studyRoom.addBooking(timeSlot, this);
 
-            studyRoom.addBooking(this);              // list
-            studyRoom.addBooking(timeSlot, this);    // map
+            // SAVE TO FILE
+            FileManager.saveBooking(this);
 
             System.out.println("\n BOOKING CONFIRMED");
             System.out.println("Student: " + student.name);
             System.out.println("Room: " + studyRoom.getRoomCode());
             System.out.println("Time: " + timeSlot);
-            System.out.println("Capacity: " +
-                    studyRoom.getCurrentStudents() + "/" + studyRoom.getCapacity());
 
         } catch (RoomFullException e) {
             System.out.println("\n BOOKING FAILED");
